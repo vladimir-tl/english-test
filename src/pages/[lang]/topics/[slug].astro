@@ -1,0 +1,254 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { languages, ui, type Lang } from '../../../i18n/ui';
+import { allTopics } from '../../../data/topics';
+
+export function getStaticPaths() {
+  return Object.keys(languages).flatMap((lang) =>
+    allTopics.map(({ topic }) => ({ params: { lang, slug: topic.slug } })),
+  );
+}
+
+const lang = Astro.params.lang as Lang;
+const t = ui[lang];
+const { topic, module: mod } = allTopics.find((x) => x.topic.slug === Astro.params.slug)!;
+const wordCol = lang === 'ru' ? 1 : lang === 'et' ? 2 : 3;
+const related = mod.topics.filter((x) => x.slug !== topic.slug);
+const description = t.topicDesc.replace('{title}', topic.title[lang]).replace('{level}', topic.level);
+const abs = (p: string) => new URL(p, Astro.site).href;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: t.navTopics, item: abs(`/${lang}/topics`) },
+      { '@type': 'ListItem', position: 2, name: mod.title[lang], item: abs(`/${lang}/topics#${mod.id}`) },
+      { '@type': 'ListItem', position: 3, name: topic.title[lang], item: abs(`/${lang}/topics/${topic.slug}`) },
+    ],
+  },
+];
+const data = JSON.stringify({
+  questions: topic.questions,
+  t: {
+    question: t.question, of: t.of, next: t.next, finish: t.finish,
+    right: t.right, wrong: t.wrong, verdicts: t.verdicts, yourAnswer: t.yourAnswer,
+  },
+});
+---
+<Base lang={lang} title={`${topic.title[lang]} — ${t.navTopics}`} description={description} path={`/topics/${topic.slug}`} jsonLd={jsonLd}>
+  <nav class="crumbs muted" aria-label="breadcrumb">
+    <a href={`/${lang}/topics`}>{t.navTopics}</a>
+    <span aria-hidden="true">›</span>
+    <a href={`/${lang}/topics#${mod.id}`}>{mod.title[lang]}</a>
+    <span aria-hidden="true">›</span>
+    <span aria-current="page">{topic.title[lang]}</span>
+  </nav>
+
+  <div class="card" id="app" data-config={data}>
+    <section id="intro">
+      <h1>{topic.title[lang]}</h1>
+      <p class="muted" lang="en">{topic.phrases}</p>
+      <button class="btn" id="start">{t.startTopic}</button>
+    </section>
+
+    <section id="loader" hidden aria-live="polite">
+      <div class="deck" aria-hidden="true"><i></i><i></i><i></i></div>
+      <p class="muted">{t.shuffling}</p>
+    </section>
+
+    <section id="quiz" hidden>
+      <progress id="bar" value="0"></progress>
+      <p class="muted" id="counter"></p>
+      <p class="prompt" id="prompt" lang="en"></p>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback" aria-live="polite" hidden></div>
+      <button class="btn" id="next" disabled></button>
+    </section>
+
+    <section id="result" hidden>
+      <p class="muted">{t.result}</p>
+      <p class="level" id="score"></p>
+      <p id="verdict"></p>
+      <h2>{t.review}</h2>
+      <div id="review"></div>
+      <button class="btn" id="retry">{t.retry}</button>
+    </section>
+  </div>
+
+  <details class="words">
+    <summary>{t.wordsTitle} ({topic.words.length})</summary>
+    <dl>
+      {topic.words.map((w) => (
+        <>
+          <dt lang="en">{w[0]}</dt>
+          <dd>{w[wordCol]}</dd>
+        </>
+      ))}
+    </dl>
+  </details>
+
+  {related.length > 0 && (
+    <nav class="related" aria-label={t.related}>
+      <h2>{t.related}</h2>
+      <ul>
+        {related.map((x) => <li><a href={`/${lang}/topics/${x.slug}`}>{x.title[lang]}</a></li>)}
+      </ul>
+    </nav>
+  )}
+</Base>
+
+<style>
+  .crumbs { max-width:640px; margin:0 auto 16px; font-size:.875rem; display:flex; flex-wrap:wrap; gap:6px; }
+  .crumbs a { color:var(--muted); text-decoration:none; }
+  .crumbs a:hover { color:var(--accent); }
+  #intro h1 { margin:0 0 4px; }
+  #intro .muted { margin:0 0 20px; }
+  .options :global(.opt:not(:disabled):hover) { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 8%, transparent); }
+  .options :global(.opt:disabled) { cursor:default; }
+  .options :global(.opt.is-ok) { border-color:var(--ok); box-shadow:0 0 0 2px var(--ok) inset; }
+  .options :global(.opt.is-bad) { border-color:var(--bad); box-shadow:0 0 0 2px var(--bad) inset; }
+  .feedback { margin:0 0 16px; padding:10px 14px; border-radius:10px; border:1px solid var(--line); }
+  .feedback :global(p) { margin:0; }
+  .feedback :global(.expl) { margin-top:4px; font-size:.95rem; }
+  #loader { text-align:center; padding:32px 0; }
+  .deck { position:relative; width:64px; height:44px; margin:0 auto 12px; }
+  .deck i { position:absolute; inset:0; border:1px solid var(--line); border-radius:8px; background:var(--card); animation:shuffle .6s ease-in-out infinite alternate; }
+  .deck i:nth-child(1) { transform:rotate(-8deg); }
+  .deck i:nth-child(2) { animation-delay:.1s; }
+  .deck i:nth-child(3) { border-color:var(--accent); animation-delay:.2s; }
+  @keyframes shuffle { to { transform:translateX(10px) rotate(6deg); } }
+  @media (prefers-reduced-motion: reduce) { .deck i { animation:none; } }
+  #score { margin:0; }
+  .words, .related { max-width:640px; margin:24px auto 0; }
+  .words { border:1px solid var(--line); border-radius:16px; background:var(--card); }
+  .words summary { cursor:pointer; padding:14px 20px; font-weight:600; }
+  .words dl { display:grid; grid-template-columns:minmax(120px, auto) 1fr; gap:6px 16px; margin:0; padding:0 20px 16px; }
+  .words dt { font-weight:600; }
+  .words dd { margin:0; color:var(--muted); }
+  .related h2 { font-size:1.1rem; margin:0 0 8px; }
+  .related ul { margin:0; padding-left:20px; }
+  .related a { color:var(--accent); }
+</style>
+
+<script>
+  import type { TopicQuestion } from '../../../data/topics';
+
+  const root = document.getElementById('app')!;
+  const { questions: source, t } = JSON.parse(root.dataset.config!) as {
+    questions: TopicQuestion[];
+    t: Record<string, any>;
+  };
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const next = $<HTMLButtonElement>('next');
+
+  // A shuffled copy: question order and option order change on every attempt.
+  let questions: TopicQuestion[] = [];
+  let current = 0;
+  let answers: number[] = [];
+
+  const shuffle = <T,>(a: T[]) => {
+    const r = [...a];
+    for (let i = r.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [r[i], r[j]] = [r[j], r[i]];
+    }
+    return r;
+  };
+  const prepare = (q: TopicQuestion): TopicQuestion => {
+    const order = shuffle(q.options.map((_, i) => i));
+    return { ...q, options: order.map((i) => q.options[i]), answer: order.indexOf(q.answer) };
+  };
+
+  function show(id: 'intro' | 'loader' | 'quiz' | 'result') {
+    for (const s of ['intro', 'loader', 'quiz', 'result']) $(s).hidden = s !== id;
+  }
+
+  function renderQuestion() {
+    const q = questions[current];
+    const bar = $<HTMLProgressElement>('bar');
+    bar.max = questions.length;
+    bar.value = current;
+    $('counter').textContent = `${t.question} ${current + 1} ${t.of} ${questions.length}`;
+    $('prompt').textContent = q.prompt;
+    $('feedback').hidden = true;
+    next.hidden = true;
+    $('options').replaceChildren(
+      ...q.options.map((text, i) => {
+        const b = document.createElement('button');
+        b.className = 'opt';
+        b.type = 'button';
+        b.lang = 'en';
+        b.textContent = text;
+        b.setAttribute('aria-pressed', 'false');
+        b.onclick = () => check(i);
+        return b;
+      }),
+    );
+  }
+
+  function check(answer: number) {
+    const q = questions[current];
+    answers[current] = answer;
+    const ok = answer === q.answer;
+    $('options').querySelectorAll<HTMLButtonElement>('.opt').forEach((b, i) => {
+      b.disabled = true;
+      b.setAttribute('aria-pressed', String(i === answer));
+      if (i === q.answer) b.classList.add('is-ok');
+      else if (i === answer) b.classList.add('is-bad');
+    });
+
+    const fb = $('feedback');
+    const head = document.createElement('p');
+    head.className = ok ? 'ok' : 'bad';
+    head.textContent = ok ? `✓ ${t.right}` : `✗ ${t.wrong}: ${q.options[q.answer]}`;
+    const expl = document.createElement('p');
+    expl.className = 'expl';
+    expl.lang = 'en';
+    expl.textContent = q.explain;
+    fb.replaceChildren(head, expl);
+    fb.hidden = false;
+
+    next.hidden = false;
+    next.disabled = false;
+    next.textContent = current === questions.length - 1 ? t.finish : t.next;
+    next.focus();
+  }
+
+  function renderResult() {
+    const score = answers.filter((a, i) => a === questions[i].answer).length;
+    $('score').textContent = `${score} / ${questions.length}`;
+    $('verdict').textContent = t.verdicts.find((v: { min: number }) => score / questions.length >= v.min).text;
+    $('review').replaceChildren(
+      ...questions.map((q, i) => {
+        const ok = answers[i] === q.answer;
+        const div = document.createElement('div');
+        div.className = 'rev';
+        const p = document.createElement('div');
+        p.lang = 'en';
+        p.textContent = `${i + 1}. ${q.prompt}`;
+        const r = document.createElement('div');
+        r.className = ok ? 'ok' : 'bad';
+        r.textContent = ok
+          ? `✓ ${q.options[answers[i]]}`
+          : `✗ ${t.yourAnswer}: ${q.options[answers[i]]} → ${q.options[q.answer]}`;
+        div.append(p, r);
+        return div;
+      }),
+    );
+    show('result');
+  }
+
+  $('start').onclick = () => {
+    questions = shuffle(source).map(prepare);
+    current = 0;
+    answers = [];
+    show('loader');
+    setTimeout(() => { show('quiz'); renderQuestion(); }, 700);
+  };
+  $('retry').onclick = () => show('intro');
+  next.onclick = () => {
+    if (current === questions.length - 1) return renderResult();
+    current++;
+    renderQuestion();
+  };
+</script>

@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import { ui } from '../i18n/ui';
+
+const t = ui.ru;
+---
+<Base lang="ru" title={`${t.notFound} — ${t.siteName}`} description={t.notFoundText} noindex>
+  <div class="card">
+    <p class="level">404</p>
+    <h1>{t.notFound}</h1>
+    <p class="muted">{t.notFoundText}</p>
+    <p><a class="btn" href="/ru">{t.navHome}</a> <a href="/ru/topics">{t.navTopics}</a></p>
+  </div>
+</Base>

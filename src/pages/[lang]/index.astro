@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import LevelSteps from '../../components/LevelSteps.astro';
+import { languages, ui, type Lang } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = ui[lang];
+const site = new URL('/', Astro.site).href;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: t.siteName,
+    url: site,
+    inLanguage: lang,
+    publisher: { '@id': 'https://tallinn-learning.ee/#org' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    '@id': 'https://tallinn-learning.ee/#org',
+    name: 'Tallinn Learning OÜ',
+    url: 'https://tallinn-learning.ee',
+  },
+];
+---
+<Base lang={lang} title={t.homeTitle} description={t.homeDesc} jsonLd={jsonLd}>
+  <section class="hero">
+    <div class="text">
+      <h1 set:html={t.heroTitle} />
+      <p class="sub">{t.heroSub}</p>
+      <a class="btn cta" href={`/${lang}/test`}>{t.cta}</a>
+    </div>
+    <div class="pic"><LevelSteps alt={t.heroAlt} /></div>
+  </section>
+</Base>
+
+<style>
+  .hero { display:grid; gap:32px; align-items:center; padding:24px 0 8px; }
+  h1 { font-size:clamp(2.2rem, 7vw, 3.4rem); line-height:1.1; margin:0 0 12px; }
+  h1 :global(em) { font-style:normal; color:var(--accent); }
+  .sub { font-size:1.15rem; color:var(--muted); margin:0 0 28px; }
+  .cta { display:inline-block; text-decoration:none; padding:14px 28px; font-size:1.05rem; font-weight:600; }
+  .pic { max-width:360px; width:100%; margin:0 auto; color:var(--fg); }
+  @media (min-width: 760px) {
+    .hero { grid-template-columns: 1.1fr 1fr; }
+  }
+</style>

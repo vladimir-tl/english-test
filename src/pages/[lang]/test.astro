@@ -1,0 +1,156 @@
+---
+import Base from '../../layouts/Base.astro';
+import { languages, ui, type Lang } from '../../i18n/ui';
+import { questions, thresholds } from '../../data/questions';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = ui[lang];
+const data = JSON.stringify({ questions, thresholds, t });
+---
+<Base lang={lang} title={`${t.title} — ${t.siteName}`} description={t.testDesc} path="/test">
+  <div class="card" id="app" data-config={data}>
+    <section id="intro">
+      <h1>{t.title}</h1>
+      <p class="muted">{t.intro}</p>
+      <button class="btn" id="start">{t.start}</button>
+    </section>
+
+    <section id="quiz" hidden>
+      <progress id="bar" value="0"></progress>
+      <p class="muted" id="counter"></p>
+      <audio id="audio" controls preload="auto" hidden></audio>
+      <p class="prompt" id="prompt"></p>
+      <ul class="options" id="options"></ul>
+      <button class="btn" id="next" disabled></button>
+    </section>
+
+    <section id="result" hidden>
+      <p class="muted">{t.yourLevel}</p>
+      <p class="level" id="level"></p>
+      <p id="desc"></p>
+      <p class="muted" id="score"></p>
+      <h2>{t.review}</h2>
+      <div id="review"></div>
+      <button class="btn" id="retry">{t.retry}</button>
+    </section>
+  </div>
+</Base>
+
+<script>
+  import type { Question } from '../../data/questions';
+
+  const root = document.getElementById('app')!;
+  const cfg = JSON.parse(root.dataset.config!) as {
+    questions: Question[];
+    thresholds: { level: 'A0' | 'A1' | 'A2' | 'B1'; min: number }[];
+    t: Record<string, any>;
+  };
+  const { questions, thresholds, t } = cfg;
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+
+  let current = 0;
+  let answers: (number | string)[] = [];
+  let selected: number | string | null = null;
+
+  const norm = (v: string) => v.trim().toLowerCase().replace(/[’‘]/g, "'").replace(/[.!]+$/, '').replace(/\s+/g, ' ');
+  const isCorrect = (q: Question, a: number | string | undefined) =>
+    q.accept ? typeof a === 'string' && q.accept.map(norm).includes(norm(a)) : a === q.answer;
+  const shown = (q: Question, a: number | string | undefined) =>
+    q.accept ? (a === undefined || a === '' ? '—' : String(a)) : q.options[a as number];
+
+  function show(id: 'intro' | 'quiz' | 'result') {
+    for (const s of ['intro', 'quiz', 'result']) $(s).hidden = s !== id;
+  }
+
+  function renderQuestion() {
+    const q = questions[current];
+    selected = null;
+    const bar = $<HTMLProgressElement>('bar');
+    bar.max = questions.length;
+    bar.value = current;
+    $('counter').textContent = `${t.question} ${current + 1} ${t.of} ${questions.length}`;
+    $('prompt').textContent = q.prompt;
+    const audio = $<HTMLAudioElement>('audio');
+    audio.pause();
+    audio.hidden = !q.audio;
+    if (q.audio) audio.src = q.audio;
+    else audio.removeAttribute('src');
+    const list = $('options');
+    if (q.accept) {
+      const li = document.createElement('li');
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'gap';
+      input.placeholder = t.typeHere;
+      input.autocomplete = 'off';
+      input.autocapitalize = 'off';
+      input.spellcheck = false;
+      input.oninput = () => {
+        selected = input.value;
+        $<HTMLButtonElement>('next').disabled = input.value.trim() === '';
+      };
+      input.onkeydown = (e) => { if (e.key === 'Enter' && !$<HTMLButtonElement>('next').disabled) $('next').click(); };
+      li.append(input);
+      list.replaceChildren(li);
+      setTimeout(() => input.focus(), 0);
+    } else list.replaceChildren(
+      ...q.options.map((text, i) => {
+        const li = document.createElement('li');
+        const b = document.createElement('button');
+        b.className = 'opt';
+        b.type = 'button';
+        b.textContent = text;
+        b.setAttribute('aria-pressed', 'false');
+        b.onclick = () => {
+          selected = i;
+          list.querySelectorAll('.opt').forEach((el, j) => el.setAttribute('aria-pressed', String(j === i)));
+          $<HTMLButtonElement>('next').disabled = false;
+        };
+        li.append(b);
+        return li;
+      }),
+    );
+    const next = $<HTMLButtonElement>('next');
+    next.disabled = true;
+    next.textContent = current === questions.length - 1 ? t.finish : t.next;
+  }
+
+  function renderResult() {
+    const score = answers.filter((a, i) => isCorrect(questions[i], a)).length;
+    const level = thresholds.find((x) => score >= x.min)!.level;
+    $('level').textContent = level === 'A0' ? '< A1' : level;
+    $('desc').textContent = t.levels[level];
+    $('score').textContent = `${t.score}: ${score} / ${questions.length}`;
+    $('review').replaceChildren(
+      ...questions.map((q, i) => {
+        const ok = isCorrect(q, answers[i]);
+        const div = document.createElement('div');
+        div.className = 'rev';
+        const p = document.createElement('div');
+        p.textContent = `${i + 1}. [${q.level}] ${q.prompt}`;
+        const r = document.createElement('div');
+        r.className = ok ? 'ok' : 'bad';
+        r.textContent = ok
+          ? `✓ ${shown(q, answers[i])}`
+          : `✗ ${t.yourAnswer}: ${shown(q, answers[i])} → ${t.correct}: ${q.accept ? q.accept[0] : q.options[q.answer]}`;
+        div.append(p, r);
+        return div;
+      }),
+    );
+    show('result');
+  }
+
+  $('start').onclick = () => { current = 0; answers = []; show('quiz'); renderQuestion(); };
+  $('retry').onclick = () => show('intro');
+  $('next').onclick = () => {
+    if (selected === null) return;
+    answers[current] = selected;
+    if (current === questions.length - 1) return renderResult();
+    current++;
+    renderQuestion();
+  };
+</script>

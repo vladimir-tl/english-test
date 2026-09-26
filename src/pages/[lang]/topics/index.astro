@@ -1,0 +1,79 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { languages, ui, type Lang } from '../../../i18n/ui';
+import { modules, allTopics } from '../../../data/topics';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = ui[lang];
+let n = 0;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: t.topicsTitle,
+    itemListElement: allTopics.map(({ topic }, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: topic.title[lang],
+      url: new URL(`/${lang}/topics/${topic.slug}`, Astro.site).href,
+    })),
+  },
+];
+---
+<Base lang={lang} title={`${t.topicsTitle} — ${t.siteName}`} description={t.topicsDesc.replace('{n}', String(allTopics.length))} path="/topics" jsonLd={jsonLd}>
+  <div class="head">
+    <h1>{t.topicsTitle}</h1>
+    <p class="muted">{allTopics.length} {t.topicsCount} · {t.topicsIntro}</p>
+  </div>
+
+  <section class="band" id="a2-b1">
+    <h2 class="band-title"><span class="chip">A2–B1</span> {t.levelName}</h2>
+
+    {modules.map((m, mi) => (
+      <section class="group" id={m.id}>
+        <h3 class="group-title">
+          <a class="anchor" href={`#${m.id}`}>{t.moduleWord} {mi + 1}. {m.title[lang]}</a>
+          {' '}<span class="muted small">{m.topics.length} {t.topicsCount}</span>
+        </h3>
+        <p class="muted goal">{m.goal[lang]}</p>
+        <div class="grid">
+          {m.topics.map((topic) => (
+            <a class="card topic" href={`/${lang}/topics/${topic.slug}`}>
+              <span class="num">{++n}</span>
+              <h4>{topic.title[lang]}</h4>
+              <p class="muted" lang="en">{topic.phrases}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </section>
+</Base>
+
+<style>
+  .head { margin:0 0 24px; }
+  .head h1 { margin:0 0 4px; }
+  .band { margin-bottom:48px; scroll-margin-top:16px; }
+  .band-title { display:flex; align-items:center; gap:12px; margin:0 0 20px; padding-bottom:8px; border-bottom:1px solid var(--line); font-size:1.5rem; }
+  .chip { background:var(--accent); color:#fff; border-radius:10px; padding:2px 12px; font-size:1.1rem; }
+  .group { margin-bottom:32px; scroll-margin-top:16px; }
+  .group-title { margin:0 0 4px; font-size:1.35rem; }
+  .goal { margin:0 0 14px; font-size:.95rem; }
+  .anchor { color:inherit; text-decoration:none; }
+  .anchor:hover { color:var(--accent); }
+  .small { font-size:.8rem; font-weight:400; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:12px; }
+  .topic { max-width:none; margin:0; padding:16px; color:inherit; text-decoration:none; transition:transform .15s, border-color .15s, box-shadow .15s, background-color .15s; }
+  .topic:hover, .topic:focus-visible { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 6%, var(--card)); transform:translateY(-3px); box-shadow:0 6px 18px #0000001f; }
+  @media (prefers-reduced-motion: reduce) {
+    .topic { transition:none; }
+    .topic:hover { transform:none; }
+  }
+  .num { color:var(--accent); font-weight:700; }
+  .topic h4 { margin:4px 0; font-size:1.05rem; }
+  .topic p { margin:0; font-size:.875rem; }
+</style>
