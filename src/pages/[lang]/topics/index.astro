@@ -10,6 +10,7 @@ export function getStaticPaths() {
 const lang = Astro.params.lang as Lang;
 const t = ui[lang];
 let n = 0;
+let moduleNo = 0;
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -33,11 +34,10 @@ const jsonLd = [
   <section class="band" id="a2-b1">
     <h2 class="band-title"><span class="chip">A2–B1</span> {t.levelName}</h2>
 
-    {modules.map((m, mi) => (
+    {modules.map((m) => (
       <section class="group" id={m.id}>
         <h3 class="group-title">
-          <a class="anchor" href={`#${m.id}`}>{t.moduleWord} {mi + 1}. {m.title[lang]}</a>
-          {' '}<span class="muted small">{m.topics.length} {t.topicsCount}</span>
+          <a class="anchor" href={`#${m.id}`}>{m.intro ? t.introModule : `${t.moduleWord} ${++moduleNo}`}. {m.title[lang]}</a>
         </h3>
         <p class="muted goal">{m.goal[lang]}</p>
         <div class="grid">
@@ -60,13 +60,12 @@ const jsonLd = [
   .band { margin-bottom:48px; scroll-margin-top:16px; }
   .band-title { display:flex; align-items:center; gap:12px; margin:0 0 20px; padding-bottom:8px; border-bottom:1px solid var(--line); font-size:1.5rem; }
   .chip { background:var(--accent); color:#fff; border-radius:10px; padding:2px 12px; font-size:1.1rem; }
-  .group { margin-bottom:32px; scroll-margin-top:16px; }
+  .group { margin-bottom:56px; scroll-margin-top:16px; }
   .group-title { margin:0 0 4px; font-size:1.35rem; }
-  .goal { margin:0 0 14px; font-size:.95rem; }
+  .goal { margin:0 0 20px; font-size:.95rem; }
   .anchor { color:inherit; text-decoration:none; }
   .anchor:hover { color:var(--accent); }
-  .small { font-size:.8rem; font-weight:400; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:12px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:24px; }
   .topic { max-width:none; margin:0; padding:16px; color:inherit; text-decoration:none; transition:transform .15s, border-color .15s, box-shadow .15s, background-color .15s; }
   .topic:hover, .topic:focus-visible { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 6%, var(--card)); transform:translateY(-3px); box-shadow:0 6px 18px #0000001f; }
   @media (prefers-reduced-motion: reduce) {

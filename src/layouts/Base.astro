@@ -81,6 +81,10 @@ const langs = Object.keys(languages) as Lang[];
           <span class="foot-h">{t.navTopics}</span>
           {modules.map((m) => <a href={`/${lang}/topics#${m.id}`}>{m.title[lang]}</a>)}
         </nav>
+        <nav class="foot-links" aria-label={t.footCourse}>
+          <span class="foot-h">{t.footCourse}</span>
+          <a href={t.courseUrl}>{t.courseName}</a>
+        </nav>
       </div>
       <p class="muted">{t.footFree} <a href="https://tallinn-learning.ee">Tallinn Learning OÜ</a>.</p>
       <p class="muted">© {new Date().getFullYear()} Tallinn Learning OÜ</p>
