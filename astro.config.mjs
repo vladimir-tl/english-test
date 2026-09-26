@@ -5,5 +5,6 @@ export default defineConfig({
   // Clean URLs without a trailing slash: /ru/topics is served from ru/topics.html on Cloudflare Pages.
   trailingSlash: 'never',
   build: { format: 'file' },
-  redirects: { '/': '/ru' },
+  // The / -> /ru redirect lives in public/_redirects; defining it here too makes
+  // the Cloudflare build emit a duplicate rule and the deploy fails.
 });
