@@ -20,6 +20,34 @@ export interface ListeningTask {
 // To add a task: put the MP3 in public/audio/ and add an entry here.
 export const listeningTasks: ListeningTask[] = [
   {
+    slug: 'alex-onboarding',
+    level: 'A2',
+    title: { ru: 'Первый день Алекса', en: 'Alex’s first day', et: 'Alexi esimene päev' },
+    audio: '/audio/a2/alex-onboarding.mp3',
+    intro: 'You will hear a story about a man who starts a new job. Listen carefully, then answer the questions.',
+    transcript: `On Monday, Alex started a new job at an IT company. He worked from home because the office was in another city. It was his first IT job, and he felt nervous. His manager sent him a welcome email. The email had some information about the team. However, it did not say what time his first meeting started.
+
+Alex sent a message to his manager and asked about the meeting. The manager told him to join at nine o’clock. At nine, he clicked the link, but it did not work. He was worried because he did not want to be late. A colleague sent him a new link. Finally, he joined the meeting and met his team.
+
+During the meeting, people talked about different projects. Some words were new to Alex, so he did not understand everything. He wanted to ask questions, but everyone spoke very quickly. After the meeting, his manager asked him to check the company website. The manager did not explain which pages he needed to check. Alex opened the website but did not know where to start.
+
+At first, he was afraid to ask for help. He thought his colleagues were too busy. Then he sent a message and asked for clear instructions. His manager sent him a short list of tasks and an example. This helped him understand what he needed to do. However, later that day, he could not open an important file.
+
+He asked for help in the team chat, but nobody answered. His colleagues were in meetings, so he waited and worked on another task. The next morning, Alex told his manager about these problems. They agreed to have a short video call every morning. During these calls, he could ask questions and discuss his tasks. After a few days, Alex felt more comfortable and less worried about his new job.`,
+    questions: [
+      { prompt: 'Why did Alex work from home on his first day?', options: ['The office was closed on Monday.', 'He was ill.', 'He did not like the office.', 'The office was in another city.'], answer: 3, explain: 'He worked from home because the office was in another city.' },
+      { prompt: 'What information was missing in the welcome email?', options: ['The time of his first meeting.', 'The name of his manager.', 'The information about the team.', 'The address of the office.'], answer: 0, explain: 'The email did not say what time his first meeting started.' },
+      { prompt: 'What happened when Alex clicked the meeting link at nine o’clock?', options: ['He joined the meeting at once.', 'The link did not work.', 'The meeting was cancelled.', 'He clicked the wrong link and left.'], answer: 1, explain: 'The link did not work, so a colleague sent him a new one.' },
+      { prompt: 'Who helped Alex join the meeting?', options: ['His manager called him.', 'A friend from another company.', 'A colleague sent him a new link.', 'He asked the IT support team.'], answer: 2, explain: 'A colleague sent him a new link, and he finally joined the meeting.' },
+      { prompt: 'Why did Alex not understand everything in the meeting?', options: ['Some words were new, and people spoke very quickly.', 'The sound was bad.', 'He joined the meeting too late.', 'People spoke a different language.'], answer: 0, explain: 'Some words were new to him, and everyone spoke very quickly.' },
+      { prompt: 'What was the problem with the manager’s task about the company website?', options: ['The website did not open.', 'The task was too easy.', 'The manager did not explain which pages to check.', 'Alex had no time for it.'], answer: 2, explain: 'The manager did not say which pages he needed to check, so Alex did not know where to start.' },
+      { prompt: 'Why was Alex afraid to ask for help at first?', options: ['His manager was unfriendly.', 'He thought his colleagues were too busy.', 'He did not have the team chat.', 'He wanted to find the answer himself.'], answer: 1, explain: 'He thought his colleagues were too busy.' },
+      { prompt: 'What did the manager send after Alex asked for clear instructions?', options: ['A video about the company.', 'A new link to the website.', 'A long document with rules.', 'A short list of tasks and an example.'], answer: 3, explain: 'The manager sent a short list of tasks and an example.' },
+      { prompt: 'What did Alex do when nobody answered his question in the team chat?', options: ['He waited and worked on another task.', 'He stopped working for the day.', 'He called his manager at once.', 'He asked a friend to open the file.'], answer: 0, explain: 'His colleagues were in meetings, so he waited and worked on another task.' },
+      { prompt: 'What did Alex and his manager agree to do?', options: ['Meet in the office every week.', 'Send emails every evening.', 'Have a short video call every morning.', 'Have a long meeting on Fridays.'], answer: 2, explain: 'They agreed to have a short video call every morning, where he could ask questions.' },
+    ],
+  },
+  {
     slug: 'anna-internship',
     level: 'B1',
     title: { ru: 'Стажировка Анны', en: 'Anna’s internship', et: 'Anna praktika' },
