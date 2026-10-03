@@ -20,6 +20,34 @@ export interface ListeningTask {
 // To add a task: put the MP3 in public/audio/ and add an entry here.
 export const listeningTasks: ListeningTask[] = [
   {
+    slug: 'erik-sprint-planning',
+    level: 'A2',
+    title: { ru: 'Планирование спринта Эрика', en: 'Erik’s sprint planning', et: 'Eriku sprindi planeerimine' },
+    audio: '/audio/a2/sprint-planning.mp3',
+    intro: 'You will hear a story about a man at his first sprint planning meeting. Listen carefully, then answer the questions.',
+    transcript: `On Monday, Erik joined his first sprint planning meeting. His team worked in short periods called sprints. Each sprint lasted two weeks. At the meeting, they opened the backlog, a list of work for the team. It included new features and problems they needed to fix. Erik read the list and asked a few questions.
+
+One problem was with the login page. Some users could not log in to their accounts. This problem had a high priority because people could not use the website. Changing the colour of a button was less important. The team decided to discuss the login problem first. They talked about what they needed to do for this task.
+
+Before choosing their work, the team needed to estimate its size. They used story points to compare different tasks. These points showed the size of the work, not an exact number of hours. A small task had two story points. A more difficult task had five story points. When team members chose different numbers, they explained their answers.
+
+Erik asked, “How long will it take?” A developer thought the login problem would take about two days to fix. However, he might need more time if he found other problems. The team also discussed their capacity. This meant how much work they could do during the sprint. One colleague was on holiday, so the team could do less work than usual.
+
+Erik agreed to take on the testing of the login page. He planned to check it with different accounts after the fix. Another tester offered to help him if he had questions. The team chose a few more tasks but left the rest in the backlog. Their main goal for the sprint was to help users log in without problems. By the end of the meeting, Erik knew what to do and felt ready to start.`,
+    questions: [
+      { prompt: 'How long did each sprint last?', options: ['One week.', 'Two weeks.', 'Three weeks.', 'One month.'], answer: 1, explain: 'Each sprint lasted two weeks.' },
+      { prompt: 'What is a backlog?', options: ['A meeting of the team.', 'A list of work for the team.', 'A short period of work.', 'A problem on the website.'], answer: 1, explain: 'The backlog is a list of work for the team.' },
+      { prompt: 'What was the problem with the login page?', options: ['The page was too slow.', 'The button had the wrong colour.', 'Some users could not log in.', 'The page did not open on phones.'], answer: 2, explain: 'Some users could not log in to their accounts.' },
+      { prompt: 'Why did the login problem have a high priority?', options: ['People could not use the website.', 'It was easy to fix.', 'Erik found it first.', 'The manager asked for it.'], answer: 0, explain: 'It had a high priority because people could not use the website.' },
+      { prompt: 'What do story points show?', options: ['The exact number of hours.', 'The names of the team members.', 'The importance of a task.', 'The size of the work.'], answer: 3, explain: 'Story points showed the size of the work, not an exact number of hours.' },
+      { prompt: 'What did the team do when people chose different story points?', options: ['They explained their answers.', 'They asked the manager to choose.', 'They chose the smallest number.', 'They moved to the next task.'], answer: 0, explain: 'When team members chose different numbers, they explained their answers.' },
+      { prompt: 'How long did a developer think the login problem would take?', options: ['About one day.', 'About five days.', 'About two days.', 'About two weeks.'], answer: 2, explain: 'A developer thought it would take about two days, but maybe more if he found other problems.' },
+      { prompt: 'Why could the team do less work than usual?', options: ['The sprint was shorter.', 'One colleague was on holiday.', 'The tasks were more difficult.', 'Erik was new in the team.'], answer: 1, explain: 'One colleague was on holiday, so the team’s capacity was lower.' },
+      { prompt: 'What did Erik agree to do?', options: ['Fix the login page.', 'Change the colour of the button.', 'Write the list of tasks.', 'Test the login page.'], answer: 3, explain: 'Erik agreed to take on the testing of the login page.' },
+      { prompt: 'What was the main goal of the sprint?', options: ['To help users log in without problems.', 'To finish all tasks in the backlog.', 'To add new features to the website.', 'To train the new tester.'], answer: 0, explain: 'Their main goal was to help users log in without problems.' },
+    ],
+  },
+  {
     slug: 'alex-onboarding',
     level: 'A2',
     title: { ru: 'Первый день Алекса', en: 'Alex’s first day', et: 'Alexi esimene päev' },
