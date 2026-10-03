@@ -1,0 +1,39 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { languages, ui, type Lang } from '../../../i18n/ui';
+import { listeningTasks } from '../../../data/listening';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = ui[lang];
+---
+<Base lang={lang} title={`${t.navListening} — ${t.siteName}`} description={t.listeningDesc} path="/listening">
+  <div class="head">
+    <h1>{t.navListening}</h1>
+    <p class="muted">{t.listeningIntro}</p>
+  </div>
+  <div class="grid">
+    {listeningTasks.map((x) => (
+      <a class="card task" href={`/${lang}/listening/${x.slug}`}>
+        <span class="chip">{x.level}</span>
+        <h2>{x.title[lang]}</h2>
+        <p class="muted">{x.questions.length} {t.topicsCount === 'тем' ? 'вопроса' : t.topicsCount === 'teemat' ? 'küsimust' : 'questions'}</p>
+      </a>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .head { margin:0 0 24px; }
+  .head h1 { margin:0 0 4px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:24px; }
+  .task { max-width:none; margin:0; padding:16px; color:inherit; text-decoration:none; transition:border-color .15s, transform .15s; }
+  .task:hover, .task:focus-visible { border-color:var(--accent); transform:translateY(-3px); }
+  @media (prefers-reduced-motion: reduce) { .task { transition:none; } .task:hover { transform:none; } }
+  .chip { background:var(--accent); color:#fff; border-radius:10px; padding:2px 10px; font-weight:700; font-size:.9rem; }
+  .task h2 { margin:8px 0 4px; font-size:1.1rem; }
+  .task p { margin:0; font-size:.9rem; }
+</style>

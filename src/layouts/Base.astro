@@ -15,6 +15,7 @@ const t = ui[lang];
 const links = [
   { href: '', label: t.navHome },
   { href: '/test', label: t.navTest },
+  { href: '/listening', label: t.navListening },
   { href: '/topics', label: t.navTopics },
 ];
 const isCurrent = (href: string) => (href === '' ? path === '' : path === href || path.startsWith(`${href}/`));
@@ -76,6 +77,7 @@ const langs = Object.keys(languages) as Lang[];
           <span class="foot-h">{t.footTests}</span>
           <a href={`/${lang}`}>{t.navHome}</a>
           <a href={`/${lang}/test`}>{t.navTest}</a>
+          <a href={`/${lang}/listening`}>{t.navListening}</a>
         </nav>
         <nav class="foot-links" aria-label={t.navTopics}>
           <span class="foot-h">{t.navTopics}</span>
