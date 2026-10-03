@@ -20,7 +20,7 @@ const t = ui[lang];
       <a class="card task" href={`/${lang}/listening/${x.slug}`}>
         <span class="chip">{x.level}</span>
         <h2>{x.title[lang]}</h2>
-        <p class="muted">{x.questions.length} {t.topicsCount === 'тем' ? 'вопроса' : t.topicsCount === 'teemat' ? 'küsimust' : 'questions'}</p>
+        <p class="muted">{x.questions.length} {t.topicsCount === 'тем' ? (x.questions.length % 10 === 1 && x.questions.length % 100 !== 11 ? 'вопрос' : [2,3,4].includes(x.questions.length % 10) && ![12,13,14].includes(x.questions.length % 100) ? 'вопроса' : 'вопросов') : t.topicsCount === 'teemat' ? 'küsimust' : 'questions'}</p>
       </a>
     ))}
   </div>

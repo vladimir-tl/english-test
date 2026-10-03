@@ -48,6 +48,34 @@ He asked for help in the team chat, but nobody answered. His colleagues were in 
     ],
   },
   {
+    slug: 'alex-goals',
+    level: 'A2',
+    title: { ru: 'Цели Алекса', en: 'Alex’s goals', et: 'Alexi eesmärgid' },
+    audio: '/audio/a2/goal.mp3',
+    intro: 'You will hear a story about a man and his manager who talk about goals at work. Listen carefully, then answer the questions.',
+    transcript: `During his first week, Alex had a meeting with his manager. They talked about his probation period, which lasted three months. The manager explained that this was a time to learn and show his work. Alex wanted to improve his testing skills. His main goal was to do simple tasks without help. He also wanted to communicate better with his team.
+
+The manager showed Alex a written onboarding plan. The plan explained what he needed to learn each month. In the first month, he needed to learn about the company’s tools. In the second month, he would practise testing with a colleague. In the third month, he would do more tasks on his own. Each part of the plan had a deadline.
+
+Then the manager explained OKRs, or objectives and key results. An objective describes what you want to achieve. Key results help you measure your progress. Alex’s objective was to become better at testing websites. His first key result was to complete ten website checks without help. His second key result was to write five clear reports about problems on the website.
+
+Alex wrote his objective and key results in his notebook. They helped him to focus on the most important tasks. Every Friday, he met his manager to discuss his work. They talked about what was easy and what was difficult. Alex explained that writing reports was still hard for him. His manager showed him a good example and explained how to use it.
+
+Alex practised this skill with a colleague twice a week. He could use the main tools by the end of the first month. However, he still needed more practice with his reports. His manager added extra practice time to the onboarding plan. By the end of the third month, Alex could do ten checks without help and had written five clear reports. He felt more confident and was ready to continue working with the team.`,
+    questions: [
+      { prompt: 'How long was Alex’s probation period?', options: ['One month.', 'Six months.', 'Three months.', 'One year.'], answer: 2, explain: 'His probation period lasted three months.' },
+      { prompt: 'What was Alex’s main goal at the beginning?', options: ['To do simple tasks without help.', 'To change his team.', 'To write reports for his manager.', 'To learn a new language.'], answer: 0, explain: 'His main goal was to do simple tasks without help.' },
+      { prompt: 'What else did Alex want to improve?', options: ['His speed of typing.', 'His communication with the team.', 'His knowledge of English grammar.', 'His salary.'], answer: 1, explain: 'He also wanted to communicate better with his team.' },
+      { prompt: 'What did the onboarding plan show?', options: ['The names of all colleagues.', 'The working hours of the office.', 'What Alex needed to learn each month.', 'The salary for each month.'], answer: 2, explain: 'The plan explained what he needed to learn each month.' },
+      { prompt: 'What did Alex plan to do in the second month?', options: ['Practise testing with a colleague.', 'Learn about the company’s tools.', 'Do more tasks on his own.', 'Write his first report.'], answer: 0, explain: 'In the second month, he would practise testing with a colleague.' },
+      { prompt: 'What is a key result?', options: ['A list of tools.', 'A meeting with the manager.', 'A deadline in the plan.', 'A way to measure progress.'], answer: 3, explain: 'Key results help you measure your progress.' },
+      { prompt: 'What was Alex’s second key result?', options: ['To complete ten website checks.', 'To write five clear reports about problems.', 'To learn all the tools in one week.', 'To meet his manager every day.'], answer: 1, explain: 'His second key result was to write five clear reports about problems on the website.' },
+      { prompt: 'Why did Alex write his objective and key results in his notebook?', options: ['His manager asked him to do it.', 'He wanted to show them to the team.', 'They helped him focus on the most important tasks.', 'He often forgot his tasks.'], answer: 2, explain: 'They helped him to focus on the most important tasks.' },
+      { prompt: 'What was still difficult for Alex?', options: ['Using the main tools.', 'Writing reports.', 'Testing websites.', 'Talking to his colleagues.'], answer: 1, explain: 'Alex explained that writing reports was still hard for him.' },
+      { prompt: 'What was the result at the end of the third month?', options: ['Alex needed one more month of probation.', 'Alex changed his objective.', 'Alex did five checks and wrote ten reports.', 'Alex did ten checks without help and wrote five clear reports.'], answer: 3, explain: 'By the end of the third month, Alex could do ten checks without help and had written five clear reports.' },
+    ],
+  },
+  {
     slug: 'anna-internship',
     level: 'B1',
     title: { ru: 'Стажировка Анны', en: 'Anna’s internship', et: 'Anna praktika' },

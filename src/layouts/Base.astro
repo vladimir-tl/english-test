@@ -59,6 +59,7 @@ const langs = Object.keys(languages) as Lang[];
   </head>
   <body>
     <header>
+      <a class="brand" href={`/${lang}`}>English test <span>by Tallinn Learning</span></a>
       <nav class="main-nav" aria-label="Main">
         {links.map((l) => (
           <a href={`/${lang}${l.href}`} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a>
@@ -75,7 +76,6 @@ const langs = Object.keys(languages) as Lang[];
       <div class="foot-cols">
         <nav class="foot-links" aria-label={t.footTests}>
           <span class="foot-h">{t.footTests}</span>
-          <a href={`/${lang}`}>{t.navHome}</a>
           <a href={`/${lang}/test`}>{t.navTest}</a>
           <a href={`/${lang}/listening`}>{t.navListening}</a>
         </nav>
@@ -99,6 +99,8 @@ const langs = Object.keys(languages) as Lang[];
       * { box-sizing: border-box; }
       body { display:flex; flex-direction:column; min-height:100dvh; margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 system-ui,sans-serif; }
       header { width:100%; display:flex; flex-wrap:wrap; align-items:center; gap:12px 24px; max-width:920px; margin:0 auto; padding:16px; }
+      .brand { flex-basis:100%; font-weight:700; font-size:1.15rem; color:var(--fg); text-decoration:none; }
+      .brand span { font-weight:400; color:var(--muted); font-size:.9rem; }
       header nav { display:flex; gap:4px; }
       header nav a { padding:6px 12px; border-radius:8px; color:var(--muted); text-decoration:none; }
       .main-nav { flex-wrap:wrap; gap:4px 20px; }
