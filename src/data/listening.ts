@@ -79,16 +79,4 @@ Her manager was impressed by both her progress and her ability to communicate cl
       { prompt: 'What opportunity did Anna receive at the end of the internship, and when would she start?', options: ['A second internship, starting the next month.', 'A full-time job as a junior software tester, starting after graduation.', 'A part-time job as a team mentor, starting immediately.', 'A full-time job as a recruiter, starting after the summer.'], answer: 1, explain: 'Her manager offered her a full-time position as a junior software tester, and she would start after graduation.' },
     ],
   },
-  {
-    slug: 'running-late',
-    level: 'B1',
-    title: { ru: 'Сообщение: я опаздываю', en: 'A message: running late', et: 'Sõnum: ma hilinen' },
-    audio: '/audio/running-late-message.mp3',
-    intro: 'You will hear a voice message. Listen carefully, then answer the questions.',
-    questions: [
-      { prompt: 'Why is the speaker late?', options: ['The café is closed.', 'The bus hasn’t arrived.', 'They missed the train.', 'They are still at work.'], answer: 1, explain: 'The speaker is waiting for a bus that has not come.' },
-      { prompt: 'What time will the speaker probably arrive?', options: ['At 5:30', 'At 6:00', 'At 6:30', 'At 7:30'], answer: 2, explain: 'The speaker expects to arrive around 6:30.' },
-      { prompt: 'What does the speaker ask Emma to do?', options: ['Wait outside the café', 'Call back later', 'Go into the café and get a table', 'Take the next bus'], answer: 2, explain: 'Emma should go in and get a table.' },
-    ],
-  },
 ];
