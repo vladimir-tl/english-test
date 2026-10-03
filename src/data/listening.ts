@@ -20,6 +20,34 @@ export interface ListeningTask {
 // To add a task: put the MP3 in public/audio/ and add an entry here.
 export const listeningTasks: ListeningTask[] = [
   {
+    slug: 'sander-retrospective',
+    level: 'A2',
+    title: { ru: 'Ретроспектива Сандера', en: 'Sander’s retrospective', et: 'Sanderi retrospektiiv' },
+    audio: '/audio/a2/retrospective.mp3',
+    intro: 'You will hear a story about a team meeting after a sprint. Listen carefully, then answer the questions.',
+    transcript: `Sander worked as a developer at an IT company. On Friday, his team finished a two-week sprint. In the afternoon, they had a retrospective. This was a meeting about how they worked together. They discussed good things and problems from the sprint. Everyone had a chance to speak and share ideas.
+
+The meeting started with the question, “What went well?” Sander said that developers and testers worked closely together. They checked new features early and found problems quickly. A colleague said that their short daily calls also went well. Good communication helped everyone understand the plan. The team wanted to keep doing these things in the next sprint.
+
+Then they discussed another question: “What could be improved?” Sander explained that some tasks did not have clear instructions. Sometimes, he did not know exactly what he needed to build. He had to ask questions and wait for answers. Other colleagues had the same problem. They agreed that they needed to improve the information in their tasks.
+
+Sander wanted to suggest a simple change. He said, “Next time we should add a clear example to each new task.” Another colleague suggested a short checklist for writing tasks. The team liked this idea because it was easy to try. Their first action item was to create the checklist. Sander agreed to prepare it by Monday morning.
+
+The checklist included a clear description, an example, and a contact person. Sander planned to share it in the team chat. Everyone agreed to use it during the next sprint. At the next retrospective, they would discuss whether it helped. One important lesson learned was that clear instructions could save time for everyone. Sander left the meeting with a useful task and a clear plan.`,
+    questions: [
+      { prompt: 'What was a retrospective?', options: ['A meeting about how the team worked together.', 'A meeting about a new customer.', 'A test of a new feature.', 'A planning meeting for the next sprint.'], answer: 0, explain: 'It was a meeting about how they worked together.' },
+      { prompt: 'When did the team have the retrospective?', options: ['On Monday morning.', 'On Friday afternoon.', 'On Wednesday evening.', 'On Friday morning.'], answer: 1, explain: 'On Friday, in the afternoon, they had a retrospective.' },
+      { prompt: 'What went well in the sprint?', options: ['The tasks had clear instructions.', 'The team finished early.', 'Developers and testers worked closely together.', 'The team had no problems.'], answer: 2, explain: 'Developers and testers worked closely together and found problems quickly.' },
+      { prompt: 'What did the team want to do with the good things?', options: ['Keep doing them in the next sprint.', 'Stop doing them.', 'Change them.', 'Show them to another team.'], answer: 0, explain: 'The team wanted to keep doing these things in the next sprint.' },
+      { prompt: 'What was the problem with some tasks?', options: ['They were too easy.', 'They had no deadline.', 'They had too many people.', 'They did not have clear instructions.'], answer: 3, explain: 'Some tasks did not have clear instructions.' },
+      { prompt: 'What did Sander have to do when he did not know what to build?', options: ['Ask questions and wait for answers.', 'Change the task.', 'Leave the meeting.', 'Write the code anyway.'], answer: 0, explain: 'He had to ask questions and wait for answers.' },
+      { prompt: 'What did Sander suggest?', options: ['To have fewer meetings.', 'To work on Fridays.', 'To add a clear example to each new task.', 'To write longer tasks.'], answer: 2, explain: 'He said they should add a clear example to each new task.' },
+      { prompt: 'What was the team’s first action item?', options: ['To create a checklist.', 'To change the sprint length.', 'To hire a new tester.', 'To write a report.'], answer: 0, explain: 'Their first action item was to create the checklist.' },
+      { prompt: 'When did Sander agree to prepare the checklist?', options: ['By Friday evening.', 'By Monday morning.', 'By the next retrospective.', 'By the end of the month.'], answer: 1, explain: 'Sander agreed to prepare it by Monday morning.' },
+      { prompt: 'What was the lesson learned?', options: ['Daily calls take too much time.', 'Testers should work alone.', 'Meetings should be shorter.', 'Clear instructions could save time for everyone.'], answer: 3, explain: 'Clear instructions could save time for everyone.' },
+    ],
+  },
+  {
     slug: 'indrek-stand-up',
     level: 'A2',
     title: { ru: 'Стендап Индрека', en: 'Indrek’s stand-up', et: 'Indreku stand-up' },
