@@ -20,6 +20,34 @@ export interface ListeningTask {
 // To add a task: put the MP3 in public/audio/ and add an entry here.
 export const listeningTasks: ListeningTask[] = [
   {
+    slug: 'indrek-stand-up',
+    level: 'A2',
+    title: { ru: 'Стендап Индрека', en: 'Indrek’s stand-up', et: 'Indreku stand-up' },
+    audio: '/audio/a2/stand-up.mp3',
+    intro: 'You will hear a story about a developer and his daily team meeting. Listen carefully, then answer the questions.',
+    transcript: `Indrek worked as a developer at an IT company. His team worked on an online shop. Every morning, they had a short meeting called a stand-up. It usually lasted about fifteen minutes. Some colleagues joined from home, and others were in the office. Each person gave a short update about their work.
+
+On Tuesday morning, Indrek checked the team’s task board. His task was still in progress. He was working on the login page. The day before, he found a problem with the login button. He needed to fix it before users could try the new page. Before the meeting, he prepared a few notes.
+
+When it was his turn, he said, “Yesterday I worked on the login page.” “I fixed a problem with the login button,” he explained. Then he added, “Today I’m going to test my changes.” However, he could not open the test system. “I’m blocked by a problem with my access,” he told the team. He needed help before he could continue.
+
+One colleague knew how to solve this blocker. She offered to check his access after the meeting. Then another developer gave an update about a different task. The team agreed to discuss the technical details after the stand-up. This helped them keep the meeting short. By the end, everyone knew the plan and who needed help.
+
+After the meeting, Indrek and his colleague checked his account. She changed his access settings, and he could open the test system. He tested his changes, and another developer checked his code. Everything worked, so Indrek was ready to merge his changes into the main branch. After that, he moved his task to done on the board. At the next stand-up, he told the team that he was ready for a new task.`,
+    questions: [
+      { prompt: 'How long did the stand-up usually last?', options: ['About five minutes.', 'About fifteen minutes.', 'About thirty minutes.', 'About one hour.'], answer: 1, explain: 'The stand-up usually lasted about fifteen minutes.' },
+      { prompt: 'What did each person do at the stand-up?', options: ['Gave a short update about their work.', 'Showed the website to the manager.', 'Wrote a report for the team.', 'Chose a new task from the board.'], answer: 0, explain: 'Each person gave a short update about their work.' },
+      { prompt: 'What was Indrek working on?', options: ['The shopping cart.', 'The login page.', 'The test system.', 'The task board.'], answer: 1, explain: 'He was working on the login page.' },
+      { prompt: 'What problem did Indrek find the day before?', options: ['A problem with the login button.', 'A problem with the task board.', 'A problem with his computer.', 'A problem with the main branch.'], answer: 0, explain: 'The day before, he found a problem with the login button.' },
+      { prompt: 'What did Indrek say he was going to do today?', options: ['Fix the login button.', 'Ask for a new task.', 'Merge his changes.', 'Test his changes.'], answer: 3, explain: 'He said, “Today I’m going to test my changes.”' },
+      { prompt: 'Why could Indrek not continue his work?', options: ['He was ill.', 'He could not open the test system.', 'He had no notes.', 'He was late for the meeting.'], answer: 1, explain: 'He was blocked by a problem with his access to the test system.' },
+      { prompt: 'What did a colleague offer to do?', options: ['Test the login page for him.', 'Write his update for him.', 'Check his access after the meeting.', 'Take his task.'], answer: 2, explain: 'She offered to check his access after the meeting.' },
+      { prompt: 'Why did the team discuss technical details after the stand-up?', options: ['To keep the meeting short.', 'To invite more colleagues.', 'To change the plan.', 'To choose a new leader.'], answer: 0, explain: 'This helped them keep the meeting short.' },
+      { prompt: 'What happened after Indrek tested his changes?', options: ['He fixed the login button again.', 'He changed his access settings.', 'Another developer checked his code.', 'He went home.'], answer: 2, explain: 'He tested his changes, and another developer checked his code.' },
+      { prompt: 'What did Indrek do when everything worked?', options: ['He deleted his task.', 'He moved his task to done on the board.', 'He started a new page.', 'He asked for more time.'], answer: 1, explain: 'He merged his changes and then moved his task to done on the board.' },
+    ],
+  },
+  {
     slug: 'erik-sprint-planning',
     level: 'A2',
     title: { ru: 'Планирование спринта Эрика', en: 'Erik’s sprint planning', et: 'Eriku sprindi planeerimine' },
