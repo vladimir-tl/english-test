@@ -60,6 +60,10 @@ const langs = Object.keys(languages) as Lang[];
   <body>
     <header>
       <a class="brand" href={`/${lang}`}>English test <span>by Tallinn Learning</span></a>
+      <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="menu" id="menu">
       <nav class="main-nav" aria-label="Main">
         {links.map((l) => (
           <a href={`/${lang}${l.href}`} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a>
@@ -70,7 +74,14 @@ const langs = Object.keys(languages) as Lang[];
           <a href={`/${code}${path}`} aria-current={code === lang ? 'page' : undefined}>{name}</a>
         ))}
       </nav>
+      </div>
     </header>
+    <script is:inline>
+      document.querySelector('.burger').addEventListener('click', function () {
+        var open = document.querySelector('header').classList.toggle('open');
+        this.setAttribute('aria-expanded', open);
+      });
+    </script>
     <main><slot /></main>
     <footer class="foot">
       <div class="foot-cols">
@@ -99,7 +110,7 @@ const langs = Object.keys(languages) as Lang[];
       * { box-sizing: border-box; }
       body { display:flex; flex-direction:column; min-height:100dvh; margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 system-ui,sans-serif; }
       header { width:100%; display:flex; flex-wrap:wrap; align-items:center; gap:12px 24px; max-width:920px; margin:0 auto; padding:16px; }
-      .brand { flex-basis:100%; font-weight:700; font-size:1.15rem; color:var(--fg); text-decoration:none; }
+      .brand { flex:1 1 auto; font-weight:700; font-size:1.15rem; color:var(--fg); text-decoration:none; }
       .brand span { font-weight:400; color:var(--muted); font-size:.9rem; }
       header nav { display:flex; gap:4px; }
       header nav a { padding:6px 12px; border-radius:8px; color:var(--muted); text-decoration:none; }
@@ -107,8 +118,23 @@ const langs = Object.keys(languages) as Lang[];
       .main-nav a { padding:4px 0; border-radius:0; color:var(--fg); border-bottom:2px solid transparent; }
       .main-nav a:hover { color:var(--accent); }
       .main-nav a[aria-current] { color:var(--accent); border-bottom-color:var(--accent); }
+      .menu { display:contents; }
+      .burger { display:none; }
       .lang-nav { margin-left:auto; }
       .lang-nav a[aria-current] { background:var(--accent); color:#fff; }
+      @media (max-width: 640px) {
+        .brand { flex:1 1 0; min-width:0; }
+        .burger { display:flex; flex-direction:column; justify-content:center; gap:5px; width:40px; height:40px; padding:9px; background:transparent; border:1px solid var(--line); border-radius:8px; }
+        .burger span { display:block; height:2px; background:var(--fg); border-radius:2px; transition:transform .2s, opacity .2s; }
+        header.open .burger span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+        header.open .burger span:nth-child(2) { opacity:0; }
+        header.open .burger span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+        .menu { display:none; flex-basis:100%; flex-direction:column; gap:12px; padding-top:12px; border-top:1px solid var(--line); }
+        header.open .menu { display:flex; }
+        .main-nav { flex-direction:column; gap:0; }
+        .main-nav a { padding:10px 0; border-bottom:0; }
+        .lang-nav { margin-left:0; }
+      }
       main { flex:1 0 auto; width:100%; }
       .foot { width:100%; max-width:920px; margin:0 auto; padding:24px 16px 32px; border-top:1px solid var(--line); font-size:.875rem; }
       .foot-cols { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:20px 32px; }
