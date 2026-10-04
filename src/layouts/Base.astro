@@ -71,7 +71,7 @@ const langs = Object.keys(languages) as Lang[];
       </nav>
       <nav class="lang-nav" aria-label="Language">
         {(Object.entries(languages) as [Lang, string][]).map(([code, name]) => (
-          <a href={`/${code}${path}`} aria-current={code === lang ? 'page' : undefined}>{name}</a>
+          <a href={`/${code}${path}`} aria-current={code === lang ? 'page' : undefined} hreflang={code} lang={code} title={name}>{code.toUpperCase()}</a>
         ))}
       </nav>
       </div>
@@ -109,12 +109,12 @@ const langs = Object.keys(languages) as Lang[];
       }
       * { box-sizing: border-box; }
       body { display:flex; flex-direction:column; min-height:100dvh; margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 system-ui,sans-serif; }
-      header { width:100%; display:flex; flex-wrap:wrap; align-items:center; gap:12px 24px; max-width:920px; margin:0 auto; padding:16px; }
-      .brand { flex:1 1 auto; font-weight:700; font-size:1.15rem; color:var(--fg); text-decoration:none; }
+      header { width:100%; display:flex; flex-wrap:nowrap; align-items:center; gap:12px 24px; max-width:920px; margin:0 auto; padding:16px; }
+      .brand { flex:0 0 auto; white-space:nowrap; font-weight:700; font-size:1.15rem; color:var(--fg); text-decoration:none; }
       .brand span { font-weight:400; color:var(--muted); font-size:.9rem; }
       header nav { display:flex; gap:4px; }
       header nav a { padding:6px 12px; border-radius:8px; color:var(--muted); text-decoration:none; }
-      .main-nav { flex-wrap:wrap; gap:4px 20px; }
+      .main-nav { gap:4px 20px; white-space:nowrap; }
       .main-nav a { padding:4px 0; border-radius:0; color:var(--fg); border-bottom:2px solid transparent; }
       .main-nav a:hover { color:var(--accent); }
       .main-nav a[aria-current] { color:var(--accent); border-bottom-color:var(--accent); }
@@ -123,9 +123,10 @@ const langs = Object.keys(languages) as Lang[];
       .lang-nav { margin-left:auto; }
       .lang-nav a[aria-current] { background:var(--accent); color:#fff; }
       @media (max-width: 640px) {
-        .brand { flex:1 1 0; min-width:0; }
+        header { flex-wrap:wrap; }
+        .brand { flex:1 1 0; min-width:0; white-space:normal; }
         .burger { display:flex; flex-direction:column; justify-content:center; gap:5px; width:40px; height:40px; padding:9px; background:transparent; border:1px solid var(--line); border-radius:8px; }
-        .burger span { display:block; height:2px; background:var(--fg); border-radius:2px; transition:transform .2s, opacity .2s; }
+        .burger span { display:block; height:2px; background:var(--accent); border-radius:2px; transition:transform .2s, opacity .2s; }
         header.open .burger span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
         header.open .burger span:nth-child(2) { opacity:0; }
         header.open .burger span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
