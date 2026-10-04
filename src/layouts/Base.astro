@@ -125,8 +125,8 @@ const langs = Object.keys(languages) as Lang[];
       @media (max-width: 640px) {
         header { flex-wrap:wrap; }
         .brand { flex:1 1 0; min-width:0; white-space:normal; }
-        .burger { display:flex; flex-direction:column; justify-content:center; gap:5px; width:40px; height:40px; padding:9px; background:transparent; border:1px solid var(--line); border-radius:8px; }
-        .burger span { display:block; height:2px; background:#3b5bdb; border-radius:2px; transition:transform .2s, opacity .2s; }
+        .burger { -webkit-appearance:none; appearance:none; display:flex; flex-direction:column; justify-content:center; align-items:stretch; gap:5px; width:40px; height:40px; padding:9px; background:transparent; color:#3b5bdb; border:1px solid var(--line); border-radius:8px; }
+        .burger span { display:block; width:100%; height:2px; flex:none; background:#3b5bdb; border-radius:2px; transition:transform .2s, opacity .2s; }
         header.open .burger span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
         header.open .burger span:nth-child(2) { opacity:0; }
         header.open .burger span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
