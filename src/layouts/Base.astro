@@ -56,6 +56,13 @@ const langs = Object.keys(languages) as Lang[];
     {langs.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={ui[l].ogLocale} />)}
     <meta name="twitter:card" content="summary_large_image" />
     {jsonLd.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-354SQS5FYF"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-354SQS5FYF');
+    </script>
   </head>
   <body>
     <header>
