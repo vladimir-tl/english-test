@@ -17,12 +17,15 @@ export interface ListeningTask {
   questions: TopicQuestion[];
   /** slug of the topic this task belongs to; the topic page links to it */
   topic?: string;
+  /** filter tags on the listening page, English, lowercase */
+  tags: string[];
 }
 
 // To add a task: put the MP3 in public/audio/ and add an entry here.
 export const listeningTasks: ListeningTask[] = [
   {
     slug: 'sander-retrospective',
+    tags: ['agile', 'retro'],
     level: 'A2',
     title: { ru: 'Ретроспектива Сандера', en: 'Sander’s retrospective', et: 'Sanderi retrospektiiv' },
     audio: '/audio/a2/retrospective.mp3',
@@ -51,6 +54,7 @@ The checklist included a clear description, an example, and a contact person. Sa
   },
   {
     slug: 'indrek-stand-up',
+    tags: ['agile', 'stand-up'],
     level: 'A2',
     title: { ru: 'Стендап Индрека', en: 'Indrek’s stand-up', et: 'Indreku stand-up' },
     audio: '/audio/a2/stand-up.mp3',
@@ -79,6 +83,7 @@ After the meeting, Indrek and his colleague checked his account. She changed his
   },
   {
     slug: 'erik-sprint-planning',
+    tags: ['agile', 'planning'],
     level: 'A2',
     title: { ru: 'Планирование спринта Эрика', en: 'Erik’s sprint planning', et: 'Eriku sprindi planeerimine' },
     audio: '/audio/a2/sprint-planning.mp3',
@@ -107,6 +112,7 @@ Erik agreed to take on the testing of the login page. He planned to check it wit
   },
   {
     slug: 'alex-onboarding',
+    tags: ['career', 'onboarding'],
     level: 'A2',
     title: { ru: 'Первый день Алекса', en: 'Alex’s first day', et: 'Alexi esimene päev' },
     audio: '/audio/a2/alex-onboarding.mp3',
@@ -135,6 +141,7 @@ He asked for help in the team chat, but nobody answered. His colleagues were in 
   },
   {
     slug: 'alex-goals',
+    tags: ['career', 'goals'],
     level: 'A2',
     title: { ru: 'Цели Алекса', en: 'Alex’s goals', et: 'Alexi eesmärgid' },
     audio: '/audio/a2/goal.mp3',
@@ -163,6 +170,7 @@ Alex practised this skill with a colleague twice a week. He could use the main t
   },
   {
     slug: 'anna-internship',
+    tags: ['career', 'interview'],
     level: 'B1',
     title: { ru: 'Стажировка Анны', en: 'Anna’s internship', et: 'Anna praktika' },
     audio: '/audio/b1/anna-internship.mp3',
@@ -195,6 +203,7 @@ Her manager was impressed by both her progress and her ability to communicate cl
   },
   {
     slug: 'demo-kristiina-designer',
+    tags: ['demo'],
     level: 'B1',
     title: { ru: 'Демо: дизайнер Кристийна', en: 'Demo: Kristiina, designer', et: 'Demo: disainer Kristiina' },
     audio: '/audio/b1/demo/kristiina-designer.mp3',
@@ -219,6 +228,7 @@ What still needs to be done? The screen for the end of the consultation hasn’t
   },
   {
     slug: 'demo-martin-qa',
+    tags: ['demo'],
     level: 'B1',
     title: { ru: 'Демо: тестировщик Мартин', en: 'Demo: Martin, QA engineer', et: 'Demo: testija Martin' },
     audio: '/audio/b1/demo/martin-qa.mp3',
@@ -245,6 +255,7 @@ Next steps: the open bugs will be tested again after they are fixed. Next week, 
   },
   {
     slug: 'demo-denis-developer',
+    tags: ['demo'],
     level: 'B1',
     title: { ru: 'Демо: разработчик Денис', en: 'Demo: Denis, developer', et: 'Demo: arendaja Denis' },
     audio: '/audio/b1/demo/denis-dev.mp3',
@@ -269,6 +280,7 @@ What’s still to do? The sound bug on older Android phones will be fixed this w
   },
   {
     slug: 'demo-laura-team-lead',
+    tags: ['demo'],
     level: 'B1',
     title: { ru: 'Демо: тимлид Лаура', en: 'Demo: Laura, team lead', et: 'Demo: tiimijuht Laura' },
     audio: '/audio/b1/demo/laura-team-lead.mp3',
