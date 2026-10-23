@@ -8,10 +8,11 @@ const langs = Object.keys(languages) as Lang[];
 
 const git = (...args: string[]) => execFileSync('git', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
 
-// lastmod comes from git history. In a shallow clone the history is cut off and the dates would be wrong,
-// so the sitemap is then built without lastmod.
+// lastmod comes from git history. Cloudflare Workers Builds clones the repo shallow, so the history is
+// fetched first; if that fails, the dates would be wrong and the sitemap is built without lastmod.
 const hasHistory = (() => {
   try {
+    if (git('rev-parse', '--is-shallow-repository').trim() === 'true') git('fetch', '--unshallow', '--quiet');
     return git('rev-parse', '--is-shallow-repository').trim() === 'false';
   } catch {
     return false;
