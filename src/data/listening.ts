@@ -15,6 +15,8 @@ export interface ListeningTask {
   transcript?: string;
   /** answer is the index of the correct option; options are shuffled on screen */
   questions: TopicQuestion[];
+  /** slug of the topic this task belongs to; the topic page links to it */
+  topic?: string;
 }
 
 // To add a task: put the MP3 in public/audio/ and add an entry here.
@@ -189,6 +191,106 @@ Her manager was impressed by both her progress and her ability to communicate cl
       { prompt: 'What did Anna have to do during the practical task?', options: ['Write a program for an online shop.', 'Present her course project to the team.', 'Fix several errors in a website.', 'Test a shopping website and describe the problems she noticed.'], answer: 3, explain: 'She had to test a shopping website and describe any problems. She missed one error, but her notes were clear.' },
       { prompt: 'Why was she initially afraid to ask questions, and what advice did her mentor give her?', options: ['Everyone seemed busy; the mentor said asking for help is better than making assumptions.', 'She felt she knew everything; the mentor told her to wait for feedback.', 'The tools were too difficult; the mentor said she should read the manual first.', 'The team was unfriendly; the mentor said she should ask only her manager.'], answer: 0, explain: 'At first she avoided questions because everyone seemed busy. Her mentor said asking for help was better than making assumptions.' },
       { prompt: 'What opportunity did Anna receive at the end of the internship, and when would she start?', options: ['A second internship, starting the next month.', 'A full-time job as a junior software tester, starting after graduation.', 'A part-time job as a team mentor, starting immediately.', 'A full-time job as a recruiter, starting after the summer.'], answer: 1, explain: 'Her manager offered her a full-time position as a junior software tester, and she would start after graduation.' },
+    ],
+  },
+  {
+    slug: 'demo-kristiina-designer',
+    level: 'B1',
+    title: { ru: 'Демо: дизайнер Кристийна', en: 'Demo: Kristiina, designer', et: 'Demo: disainer Kristiina' },
+    audio: '/audio/b1/demo/kristiina-designer.mp3',
+    intro: 'HappySmile is building online video consultations and chat with the doctor. You will hear the designer at a demo meeting. Listen carefully, then answer the questions.',
+    topic: 'demo-meeting',
+    transcript: `Hi everyone. I’m Kristiina, the designer on this project. Let me show you what has been done on the design side.
+
+First, the layout for the video consultation screen was designed last week. Three different versions were prepared, and they were shown to five real patients. The second version was chosen because it was the easiest to use. In this version, the video window is placed in the centre, and the chat is shown on the right.
+
+The design of the chat was also finished. Large buttons were added, because many of our patients are older people. All the icons were tested on small phone screens, and two of them were changed because they were hard to understand.
+
+The results are good. Four out of five patients were able to start a video call in less than one minute, without any help.
+
+What still needs to be done? The screen for the end of the consultation hasn’t been designed yet. It will be prepared by next Wednesday. After that, the final mockups will be sent to the developers, and the colours will be checked one more time with the marketing team.`,
+    questions: [
+      { prompt: 'Which version of the layout was chosen?', options: ['The first version.', 'The second version.', 'The third version.', 'A mix of all three versions.'], answer: 1, explain: 'The second version was chosen because it was the easiest to use.' },
+      { prompt: 'Where is the chat shown in the new layout?', options: ['In the centre.', 'At the bottom.', 'On the right.', 'In a separate window.'], answer: 2, explain: 'The video window is placed in the centre, and the chat is shown on the right.' },
+      { prompt: 'Why were large buttons added?', options: ['Many patients are older people.', 'The doctors asked for them.', 'The marketing team liked them.', 'Small buttons didn’t work on iPhone.'], answer: 0, explain: 'Large buttons were added because many of the patients are older people.' },
+      { prompt: 'How many patients started a video call in less than one minute?', options: ['All five.', 'Three out of five.', 'Two out of five.', 'Four out of five.'], answer: 3, explain: 'Four out of five patients were able to start a video call in less than one minute.' },
+      { prompt: 'What hasn’t been designed yet?', options: ['The chat.', 'The screen for the end of the consultation.', 'The icons.', 'The video window.'], answer: 1, explain: 'The screen for the end of the consultation hasn’t been designed yet. It will be prepared by next Wednesday.' },
+    ],
+  },
+  {
+    slug: 'demo-martin-qa',
+    level: 'B1',
+    title: { ru: 'Демо: тестировщик Мартин', en: 'Demo: Martin, QA engineer', et: 'Demo: testija Martin' },
+    audio: '/audio/b1/demo/martin-qa.mp3',
+    intro: 'HappySmile is building online video consultations and chat with the doctor. You will hear the QA engineer at a demo meeting. Listen carefully, then answer the questions.',
+    topic: 'demo-meeting',
+    transcript: `Hello, I’m Martin from the QA team. I’d like to tell you about testing.
+
+So far, the chat feature has been tested on Android, on iPhone and in the web browser. More than sixty test cases were written for the chat and the video call. Most of them were run this week, and twelve bugs were found during testing.
+
+Most of these bugs were small, and eight of them have already been fixed by the developers. For example, some messages were shown twice, and the camera didn’t turn on when the internet connection was slow. Both problems are solved now.
+
+The other four bugs are still open. The most serious one is about sound: on some older Android phones, the doctor can’t be heard during the call. Our developers are working on it right now.
+
+The results: the chat is stable, and in our tests ninety-five percent of video calls were connected on the first try.
+
+Next steps: the open bugs will be tested again after they are fixed. Next week, the video call will be tested with real doctors from the clinic. A full test report will be shared with everyone on Friday.`,
+    questions: [
+      { prompt: 'How many bugs were found during testing?', options: ['Eight.', 'Four.', 'Twelve.', 'Sixty.'], answer: 2, explain: 'Twelve bugs were found during testing.' },
+      { prompt: 'How many bugs have already been fixed?', options: ['Eight.', 'Four.', 'Twelve.', 'All of them.'], answer: 0, explain: 'Eight of them have already been fixed by the developers. Four are still open.' },
+      { prompt: 'What is the most serious open bug?', options: ['Messages are shown twice.', 'The camera doesn’t turn on.', 'The chat is very slow.', 'On some older Android phones, the doctor can’t be heard.'], answer: 3, explain: 'The most serious bug is about sound on some older Android phones.' },
+      { prompt: 'How many video calls were connected on the first try?', options: ['Sixty percent.', 'Ninety-five percent.', 'Fifty percent.', 'All of them.'], answer: 1, explain: 'Ninety-five percent of video calls were connected on the first try.' },
+      { prompt: 'What will happen next week?', options: ['The feature will be released.', 'The test report will be written.', 'The video call will be tested with real doctors.', 'The chat will be redesigned.'], answer: 2, explain: 'Next week, the video call will be tested with real doctors from the clinic. The report will be shared on Friday.' },
+    ],
+  },
+  {
+    slug: 'demo-denis-developer',
+    level: 'B1',
+    title: { ru: 'Демо: разработчик Денис', en: 'Demo: Denis, developer', et: 'Demo: arendaja Denis' },
+    audio: '/audio/b1/demo/denis-dev.mp3',
+    intro: 'HappySmile is building online video consultations and chat with the doctor. You will hear a developer at a demo meeting. Listen carefully, then answer the questions.',
+    topic: 'demo-meeting',
+    transcript: `Hi, I’m Denis, one of the developers. I’ll explain what has been implemented on the technical side.
+
+The chat feature was implemented in the first week of the sprint. Messages are saved in our database, and they are encrypted, so patient data is protected. Photos can also be sent in the chat. This was requested by the doctors, because patients often want to show a problem with their teeth.
+
+For the video calls, we didn’t build everything from zero. An external video service was chosen, and it was connected to our app last Tuesday. On Monday, the new feature was deployed to the test server, so now it can be checked by everyone in the team.
+
+The results: a video call is started in about three seconds, and the chat works without delays.
+
+What’s still to do? The sound bug on older Android phones will be fixed this week. Notifications haven’t been added yet. At the moment, the patient isn’t told when the doctor joins the call. They will be added in the next sprint. And finally, before the release, our code will be reviewed by another team.`,
+    questions: [
+      { prompt: 'When was the chat feature implemented?', options: ['In the first week of the sprint.', 'Last Tuesday.', 'On Monday.', 'In the last sprint.'], answer: 0, explain: 'The chat feature was implemented in the first week of the sprint.' },
+      { prompt: 'Why can photos be sent in the chat?', options: ['The designer suggested it.', 'It was easy to add.', 'Patients asked for it.', 'The doctors requested it.'], answer: 3, explain: 'This was requested by the doctors, because patients often want to show a problem with their teeth.' },
+      { prompt: 'How were the video calls built?', options: ['They were built from zero.', 'An external video service was connected to the app.', 'They were copied from another app.', 'They haven’t been built yet.'], answer: 1, explain: 'An external video service was chosen, and it was connected to the app last Tuesday.' },
+      { prompt: 'What hasn’t been added yet?', options: ['Photos in the chat.', 'Encryption.', 'Notifications.', 'Video calls.'], answer: 2, explain: 'Notifications haven’t been added yet. They will be added in the next sprint.' },
+      { prompt: 'What will happen before the release?', options: ['The code will be reviewed by another team.', 'The app will be tested by patients.', 'The database will be changed.', 'The chat will be removed.'], answer: 0, explain: 'Before the release, the code will be reviewed by another team.' },
+    ],
+  },
+  {
+    slug: 'demo-laura-team-lead',
+    level: 'B1',
+    title: { ru: 'Демо: тимлид Лаура', en: 'Demo: Laura, team lead', et: 'Demo: tiimijuht Laura' },
+    audio: '/audio/b1/demo/laura-team-lead.mp3',
+    intro: 'HappySmile is building online video consultations and chat with the doctor. You will hear the team lead at the end of a demo meeting. Listen carefully, then answer the questions.',
+    topic: 'demo-meeting',
+    transcript: `Thank you, everyone. I’m Laura, the team lead. Let me sum up.
+
+Overall, the project is on track. Most of the work has been done: the design was finished, the chat and the video calls were implemented, and more than sixty test cases were checked. Great job, team!
+
+There was one problem. The video service was delivered by our partner one week late, so some of the testing was moved to the next sprint. Because of that, the release date was changed from the first to the fifteenth of December.
+
+What happens next? The remaining bugs will be fixed by the end of this sprint. Then the video calls will be tested with three doctors from the clinic. Their feedback will be collected and discussed at our next meeting.
+
+If everything goes well, the new feature will be released on the fifteenth of December, and it will be announced to all patients by email. Notifications are planned for the next sprint.
+
+Now I’d like to hear your questions and feedback.`,
+    questions: [
+      { prompt: 'How is the project going, according to Laura?', options: ['It is behind schedule.', 'It is on track.', 'It is over budget.', 'It has been stopped.'], answer: 1, explain: 'Overall, the project is on track.' },
+      { prompt: 'Why was some testing moved to the next sprint?', options: ['The partner delivered the video service one week late.', 'A tester was ill.', 'The design wasn’t ready.', 'There were too many bugs.'], answer: 0, explain: 'The video service was delivered by the partner one week late.' },
+      { prompt: 'What is the new release date?', options: ['The first of December.', 'The fifth of December.', 'The fifteenth of November.', 'The fifteenth of December.'], answer: 3, explain: 'The release date was changed from the first to the fifteenth of December.' },
+      { prompt: 'Who will test the video calls?', options: ['Five patients.', 'The marketing team.', 'Three doctors from the clinic.', 'Another development team.'], answer: 2, explain: 'The video calls will be tested with three doctors from the clinic.' },
+      { prompt: 'How will patients learn about the new feature?', options: ['From their doctor.', 'By email.', 'From a notification in the app.', 'From an online advert.'], answer: 1, explain: 'It will be announced to all patients by email.' },
     ],
   },
 ];
