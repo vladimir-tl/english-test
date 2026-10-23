@@ -1,6 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import { languages, ui, type Lang } from '../../../i18n/ui';
+import { languages, ui, plural, type Lang } from '../../../i18n/ui';
 import { modules, allTopics } from '../../../data/topics';
 
 export function getStaticPaths() {
@@ -25,10 +25,10 @@ const jsonLd = [
   },
 ];
 ---
-<Base lang={lang} title={`${t.topicsTitle} — ${t.siteName}`} description={t.topicsDesc.replace('{n}', String(allTopics.length))} path="/topics" jsonLd={jsonLd}>
+<Base lang={lang} title={`${t.topicsTitle} — ${t.siteName}`} description={t.topicsDesc.replace('{n}', plural(lang, allTopics.length, t.topicsCount))} path="/topics" jsonLd={jsonLd}>
   <div class="head">
     <h1>{t.topicsTitle}</h1>
-    <p class="muted">{allTopics.length} {t.topicsCount} · {t.topicsIntro}</p>
+    <p class="muted">{plural(lang, allTopics.length, t.topicsCount)} · {t.topicsIntro}</p>
   </div>
 
   <section class="band" id="a2-b1">

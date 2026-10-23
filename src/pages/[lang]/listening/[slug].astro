@@ -1,6 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import { languages, ui, type Lang } from '../../../i18n/ui';
+import { languages, ui, plural, type Lang } from '../../../i18n/ui';
 import { listeningTasks } from '../../../data/listening';
 
 export function getStaticPaths() {
@@ -13,6 +13,10 @@ const lang = Astro.params.lang as Lang;
 const t = ui[lang];
 const task = listeningTasks.find((x) => x.slug === Astro.params.slug)!;
 const others = listeningTasks.filter((x) => x.slug !== task.slug);
+const description = t.listeningTaskDesc
+  .replace('{title}', task.title[lang])
+  .replace('{level}', task.level)
+  .replace('{count}', plural(lang, task.questions.length, t.questionsCount));
 const data = JSON.stringify({
   questions: task.questions,
   t: {
@@ -21,7 +25,7 @@ const data = JSON.stringify({
   },
 });
 ---
-<Base lang={lang} title={`${task.title[lang]} — ${t.navListening}`} description={t.listeningDesc} path={`/listening/${task.slug}`}>
+<Base lang={lang} title={`${task.title[lang]} — ${t.navListening}`} description={description} path={`/listening/${task.slug}`}>
   <nav class="crumbs muted" aria-label="breadcrumb">
     <a href={`/${lang}/listening`}>{t.navListening}</a>
     <span aria-hidden="true">›</span>

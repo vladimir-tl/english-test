@@ -1,6 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import { languages, ui, type Lang } from '../../../i18n/ui';
+import { languages, ui, plural, type Lang } from '../../../i18n/ui';
 import { listeningTasks } from '../../../data/listening';
 
 export function getStaticPaths() {
@@ -27,7 +27,7 @@ const tags = [...new Set(allTags)].sort((a, b) => allTags.filter((x) => x === b)
       <a class="card task" href={`/${lang}/listening/${x.slug}`} data-tags={x.tags.join(' ')}>
         <span class="chip">{x.level}</span>
         <h2>{x.title[lang]}</h2>
-        <p class="muted">{x.questions.length} {t.topicsCount === 'тем' ? (x.questions.length % 10 === 1 && x.questions.length % 100 !== 11 ? 'вопрос' : [2,3,4].includes(x.questions.length % 10) && ![12,13,14].includes(x.questions.length % 100) ? 'вопроса' : 'вопросов') : t.topicsCount === 'teemat' ? 'küsimust' : 'questions'}</p>
+        <p class="muted">{plural(lang, x.questions.length, t.questionsCount)}</p>
         <p class="task-tags muted" lang="en">{x.tags.map((tag) => `#${tag}`).join(' ')}</p>
       </a>
     ))}
